@@ -74,7 +74,7 @@ let retrieveStock () : Map<BinIdentifier, PartNumber> =
     stockData.Content
 
 /// Stores a bin in the Storage Machine. It is not allowed to store the same bin "twice".
-let storeBin (bin : Bin) =
+let storeBin (bin : Bin) : Result<unit,SimulatedDatabaseError> =
     if Set.contains bin.Identifier stockData.Bins then
         Error BinAlreadyStored
     else
