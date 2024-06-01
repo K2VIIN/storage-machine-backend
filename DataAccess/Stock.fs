@@ -18,6 +18,7 @@ let stockPersistence =
                   Content = SimulatedDatabase.retrieveStock () |> Map.tryFind binIdentifier })
             |> Set.toList
 
+        // KATJA COMMENT: Spreekt vgm voor zich
         member this.newBin(bin) =
             let answer = SimulatedDatabase.storeBin bin
 

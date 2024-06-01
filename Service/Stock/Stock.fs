@@ -30,6 +30,11 @@ let productsInStock (next: HttpFunc) (ctx: HttpContext) =
         return! ThothSerializer.RespondJson productsOverview Serialization.encoderProductsOverview next ctx
     }
 
+/// KATJA COMMENT: Dit is een nieuwe functie die aangemaakt is om een nieuwe Bin in de 'database' te zetten
+/// zeg maar de eerste line is copy paste. Tweede line is het lezen van de POST request, nou zie comment lol
+/// Daarna omdat binData een Result<> teruggeeft kan het OK of ERROR zijn. Afhankelijk van welke ga je de goede path in
+/// Zoals je kan zien gaan we bij een OK het echt in de database zetten. Dit geeft ook weer iets zoals een Result<> terug,
+/// maar deze keer een Option<> wat basically hetzelfde is maar andere woorden.
 let newBin (next: HttpFunc) (ctx: HttpContext) =
     task {
         let dataAccess = ctx.GetService<IStockDataAccess>()
@@ -38,6 +43,7 @@ let newBin (next: HttpFunc) (ctx: HttpContext) =
         match binData with
         | Ok bin ->
             let newBin = Stock.newBin dataAccess bin
+
             match newBin with
             | Some newBin -> return! ThothSerializer.RespondJson newBin Serialization.encoderBin next ctx
             | None -> return! RequestErrors.badRequest (text "POST sad :( - 1") earlyReturn ctx

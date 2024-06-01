@@ -46,6 +46,8 @@ let encoderProductsOverview: Encoder<ProductsOverview> =
                   yield Encode.object [ "product", encoderProduct product; "total", Encode.int quantity ] ]
 
 // Klote ding moest zeg maar onder de decoderBinIdentifier and decoderPartNumber!!!!!!!!!!
+///  KATJA COMMENT: het decoden, dus van json naar fsharp gaat van de post request gaat via deze functie.
+/// Dus alles van in de request wordt een object van gemaakt. Als je wilt testen via postman de tussen haakjes string invullen in body en daarna de waarde.
 let decodeBin: Decoder<Bin> =
     Decode.object (fun get ->
         { Identifier = get.Required.Field "Identifier" decoderBinIdentifier
